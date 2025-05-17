@@ -5,7 +5,9 @@ let btns=['yellow','green','purple','red'];
 
 let started=false;
 let level=0;
-let maxScore=0;
+
+let highScore = localStorage.getItem("highScore") || 0;
+document.querySelector("#high-score").innerText = `Highest Score: ${highScore}`;
 
 let h2=document.querySelector('h2');
 
@@ -52,12 +54,21 @@ function checkAns(idx){
         }
     }
     else{
+        updateHighScore();
         h2.innerHTML=`Game Over! Your score was <b>${level}</b> <br> Press any key to restart the game.`;
         document.querySelector('body').style.backgroundColor='red';
         setTimeout(function(){
             document.querySelector('body').style.backgroundColor='white';
         }, 150);
         reset();
+    }
+}
+
+function updateHighScore() {
+    if (level > highScore) {
+        highScore = level;
+        localStorage.setItem("highScore", highScore);
+        document.querySelector("#high-score").innerText = `Highest Score: ${highScore}`;
     }
 }
 
